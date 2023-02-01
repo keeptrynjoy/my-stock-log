@@ -36,7 +36,7 @@ public class CompanyServiceImpl implements CompanyService{
                 .get("item").getAsJsonArray();
 
         if(asParsingArr.isEmpty()){
-            throw new IllegalStateException("조회된 종목이 없음. 기준일 조회");
+            throw new IllegalStateException("조회된 종목이 없음. 기준일 확인 요망");
         } else {
             for(JsonElement j:asParsingArr){
                 company = gson.fromJson( j, CompanyDto.class);

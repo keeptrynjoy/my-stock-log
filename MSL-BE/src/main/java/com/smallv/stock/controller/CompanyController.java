@@ -14,12 +14,12 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping("/update/company/")
-    public ResponseEntity stockLoad(@RequestParam(defaultValue = "1") String baseDate ) {
+    @GetMapping(value = {"/update/company/{baseDate}","/update/company"})
+    public ResponseEntity stockLoad(@PathVariable(required = false) String baseDate ) {
 
-        companyService.stockLoad(Integer.parseInt(String.valueOf(baseDate)));
+        companyService.stockLoad(Integer.parseInt(Optional.ofNullable(baseDate).orElse("2")));
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(baseDate);
     }
 
 
