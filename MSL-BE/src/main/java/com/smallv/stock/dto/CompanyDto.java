@@ -13,5 +13,5 @@ public class CompanyDto {
     private String itmsNm;
     private String lstgStCnt;
     private String mrktCtg;
-    private int cmo;
+    private String crno;
 }
