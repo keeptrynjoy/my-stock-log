@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CompanyDao {
     public void insertCompany(CompanyDto company);
-    public void updateCompany(CompanyDto company);
+    public void updateCompanyOnlyCrno(CompanyDto company);
 }

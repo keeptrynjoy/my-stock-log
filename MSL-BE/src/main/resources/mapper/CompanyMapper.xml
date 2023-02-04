@@ -3,6 +3,13 @@
 
 <mapper namespace="com.smallv.stock.repository.CompanyDao">
     <insert id="insertCompany" parameterType="CompanyDto">
-        INSERT INTO company VALUES (#{srtnCd},#{itmsNm},#{lstgStCnt},#{mrktCtg},#{cmo})
+        INSERT INTO company
+        VALUES (#{srtnCd},#{itmsNm},#{lstgStCnt},#{mrktCtg},#{crno})
     </insert>
+
+    <update id="updateCompanyOnlyCrno" parameterType="CompanyDto">
+        UPDATE company
+        SET crno=#{crno}
+        WHERE srtn_cd=#{srtnCd}
+    </update>
 </mapper>

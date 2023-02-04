@@ -19,7 +19,14 @@ public class CompanyController {
 
         companyService.stockLoad(Integer.parseInt(Optional.ofNullable(baseDate).orElse("2")));
 
-        return ResponseEntity.ok(baseDate);
+        return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/update/corp-num")
+    public ResponseEntity companyCmoLoad(){
+
+        companyService.companyCrnoLoad();
+        return ResponseEntity.ok("");
     }
 
 

@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class CompanyDto {
 
@@ -13,5 +12,5 @@ public class CompanyDto {
     private String itmsNm;
     private String lstgStCnt;
     private String mrktCtg;
-    private int cmo;
+    private String crno;
 }
