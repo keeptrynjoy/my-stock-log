@@ -9,13 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.function.BiFunction;
 
 @Service
 @RequiredArgsConstructor
@@ -57,20 +52,25 @@ public class CompanyServiceImpl implements CompanyService{
     public void companyCrnoLoad() {
         CompanyDto company;
 
-        JsonArray asParsingArr = fileReaderUtils.convertXMLToJson().get("result").getAsJsonObject().get("list").getAsJsonArray();
+        JsonArray asParsingArr = fileReaderUtils.convertXMLToJson()
+                .get("result")
+                .getAsJsonObject()
+                .get("list")
+                .getAsJsonArray();
+
+        BiFunction<JsonElement,String,String> extractedJsonStr =
+                (j,s)-> j.getAsJsonObject().get(s).toString().replaceAll("\"","");
 
         if(asParsingArr.isEmpty()){
             throw new IllegalStateException("조회된 기업이 없음. 데이터 확인 요망");
         } else {
             for(JsonElement j:asParsingArr){
-
                 company = CompanyDto.builder()
-                        .srtnCd(j.getAsJsonObject().get("stock_code").toString().replaceAll("\"",""))
-                        .crno(j.getAsJsonObject().get("corp_code").toString().replaceAll("\"",""))
+                        .srtnCd(extractedJsonStr.apply(j,"stock_code"))
+                        .crno(extractedJsonStr.apply(j,"corp_code"))
                         .build();
 
                 if(company.getSrtnCd().length()>=6){
-                    System.out.println("company = " + company);
                     companyDao.updateCompanyOnlyCrno(company);
                 }
             }
@@ -121,6 +121,4 @@ public class CompanyServiceImpl implements CompanyService{
 
         return asParsingArr;
     }
-    //
-    // https://opendart.fss.or.kr/api/corpCode.xml?crtfc_key=39b4d28fc2be73173eb03439f986c0fe198fe554
 }
