@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smallv.stock.repository.FinanceDao">
+
+    <resultMap id="finance" type="FinanceDto">
+        <result property="stockCode" column="STOCK_CODE"/>
+        <result property="accountNm" column="ACCOUNT_NM"/>
+        <result property="bsns_year" column="BSNS_YEAR"/>
+        <result property="qrDiv" column="QR_DIV"/>
+        <result property="currentAmt" column="CURRENT_AMT"/>
+        <result property="currentAddAmt" column="CURRENT_ADD_AMT"/>
+        <result property="currencyDiv" column="CURRENCY_DIV"/>
+    </resultMap>
+
+    <insert id="insertFinance" parameterType="FinanceDto">
+        INSERT INTO TB_FINANCE_INFO
+        VALUES (#{stockCode},
+                #{accountNm},
+                #{bsnsYear},
+                #{qrDiv},
+                #{currentAmt},
+                #{currentAddAmt},
+                #{currencyDiv})
+    </insert>
+</mapper>
