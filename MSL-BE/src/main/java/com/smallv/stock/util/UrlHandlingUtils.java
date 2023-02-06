@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -54,14 +53,14 @@ public class UrlHandlingUtils {
         도메인 + 서비스 키
     */
     /* FSS : Financial Supervisory Service 금융감독원  */
-    public String combineURLForFSS(String targetDomain){
+    public StringBuilder combineURLForFSS(String targetDomain){
 
         StringBuilder urlBuilder = new StringBuilder(targetDomain);
         urlBuilder.append(
                 "?crtfc_key=" + fssServiceKey
         );
 
-        return String.valueOf(urlBuilder);
+        return urlBuilder;
     }
     
     /*
@@ -92,7 +91,6 @@ public class UrlHandlingUtils {
             while ((line=br.readLine())!=null){
                 sb.append(line);
             }
-            System.out.println(sb.toString());
             JsonObject asJsonObj;
 
             if(convertType.equalsIgnoreCase("xml")){
