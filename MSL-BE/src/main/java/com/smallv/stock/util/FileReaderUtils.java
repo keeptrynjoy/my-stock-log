@@ -1,6 +1,6 @@
 package com.smallv.stock.util;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.json.JSONObject;
 import org.json.XML;
@@ -11,7 +11,7 @@ import java.io.*;
 @Component
 public class FileReaderUtils {
 
-    public JsonObject convertXMLToJson() {
+    public JsonElement convertXMLToJson() {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
 
@@ -24,11 +24,11 @@ public class FileReaderUtils {
             }
 
             JSONObject jsonSimpleObj = XML.toJSONObject(sb.toString());
-            JsonObject asJsonObj = JsonParser.parseString(jsonSimpleObj.toString()).getAsJsonObject();
+            JsonElement jsonElement = JsonParser.parseString(jsonSimpleObj.toString()).getAsJsonObject();
 
             br.close();
 
-            return asJsonObj;
+            return jsonElement;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

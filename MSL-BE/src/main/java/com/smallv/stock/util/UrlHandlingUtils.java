@@ -1,5 +1,6 @@
 package com.smallv.stock.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class UrlHandlingUtils {
     /* FSC : Financial Service Commission 금융위원회 */
     public String combineURLForFSC(String targetDomain, String numOfRaws, String pageNo, LocalDate baseDt){
 
-        StringBuilder urlBuilder = new StringBuilder(targetDomain);
-        urlBuilder.append(
+        StringBuilder urlBuilder = new StringBuilder(targetDomain)
+                .append(
                         "?serviceKey=" + fscServiceKey +
                         "&numOfRows=" + numOfRaws +
                         "&pageNo="+ pageNo +
@@ -55,10 +56,8 @@ public class UrlHandlingUtils {
     /* FSS : Financial Supervisory Service 금융감독원  */
     public StringBuilder combineURLForFSS(String targetDomain){
 
-        StringBuilder urlBuilder = new StringBuilder(targetDomain);
-        urlBuilder.append(
-                "?crtfc_key=" + fssServiceKey
-        );
+        StringBuilder urlBuilder = new StringBuilder(targetDomain)
+                .append("?crtfc_key=" + fssServiceKey);
 
         return urlBuilder;
     }
@@ -66,9 +65,9 @@ public class UrlHandlingUtils {
     /*
         오픈 API 연결-조회
     */
-    public JsonObject getDataByURL(String combineUrl,String convertType) {
+    public JsonElement getDataByURL(String combineUrl, String convertType) {
 
-        HttpURLConnection conn = null;
+        HttpURLConnection conn;
         URL url;
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
@@ -82,7 +81,7 @@ public class UrlHandlingUtils {
             if(Optional.ofNullable(conn.getInputStream()).isPresent()){
                 if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
                     br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-                }else {
+                } else {
                     br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
                 }
             }
@@ -91,19 +90,19 @@ public class UrlHandlingUtils {
             while ((line=br.readLine())!=null){
                 sb.append(line);
             }
-            JsonObject asJsonObj;
+            JsonElement asJsonEle;
 
             if(convertType.equalsIgnoreCase("xml")){
                 JSONObject jsonSimpleObj = XML.toJSONObject(sb.toString());
-                asJsonObj = JsonParser.parseString(jsonSimpleObj.toString()).getAsJsonObject();
+                asJsonEle = JsonParser.parseString(jsonSimpleObj.toString()).getAsJsonObject();
             } else {
-                asJsonObj = JsonParser.parseString(sb.toString()).getAsJsonObject();
+                asJsonEle = JsonParser.parseString(sb.toString()).getAsJsonObject();
             }
 
             br.close();
             conn.disconnect();
 
-            return asJsonObj;
+            return asJsonEle;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
