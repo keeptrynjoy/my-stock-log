@@ -14,5 +14,5 @@ public class FinanceDto {
     private String currentAmt;
     private String currentAddAmt;
     private String currencyDiv;
-
+    private String fsDiv;
 }

@@ -23,14 +23,6 @@ public class StockController {
         return ResponseEntity.ok("업데이트 완료");
     }
 
-    @GetMapping("/update/corp-code")
-    public ResponseEntity saveCorpCode(){
-
-        stockService.saveCorpCode();
-
-        return ResponseEntity.ok("업데이트 완료");
-    }
-
     @GetMapping("/update/finance/{stockCode}/{year}/{quarter}")
     public ResponseEntity financeSave(@PathVariable("stockCode") String stockCode,
                                       @PathVariable("year") int year,
@@ -40,7 +32,4 @@ public class StockController {
 
         return ResponseEntity.ok("업데이트 완료");
     }
-
-
-
 }

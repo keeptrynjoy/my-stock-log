@@ -11,6 +11,7 @@
         <result property="currentAmt" column="CURRENT_AMT"/>
         <result property="currentAddAmt" column="CURRENT_ADD_AMT"/>
         <result property="currencyDiv" column="CURRENCY_DIV"/>
+        <result property="fsDiv" column="FS_DIV"/>
     </resultMap>
 
     <insert id="insertFinance" parameterType="FinanceDto">
@@ -21,6 +22,8 @@
                 #{qrDiv},
                 #{currentAmt},
                 #{currentAddAmt},
-                #{currencyDiv})
+                #{currencyDiv},
+                #{fsDiv}
+                )
     </insert>
 </mapper>
