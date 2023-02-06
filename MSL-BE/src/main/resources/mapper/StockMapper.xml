@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smallv.stock.repository.StockDao">
+
+    <resultMap id="stock" type="StockDto">
+        <result property="stockCode" column="STOCK_CODE"/>
+        <result property="stockNm" column="STOCK_NM"/>
+        <result property="osCnt" column="OS_CNT"/>
+        <result property="mrktDiv" column="MART_DIV"/>
+        <result property="corpCode" column="CORP_CODE"/>
+    </resultMap>
+
+    <insert id="insertStock" parameterType="StockDto">
+        INSERT INTO TB_STOCK_INFO
+        VALUES (#{stockCode},#{stockNm},#{osCnt},#{mrktDiv},#{corpCode})
+    </insert>
+
+    <update id="updateStockOnlyCrno" parameterType="StockDto">
+        UPDATE TB_STOCK_INFO
+        SET CORP_CODE=#{corpCode}
+        WHERE STOCK_CODE=#{stockCode}
+    </update>
+
+    <select id="getDataByStockCode" resultType="StockDto" parameterType="String" resultMap="stock">
+        SELECT *
+        FROM TB_STOCK_INFO
+        WHERE STOCK_CODE = #{stockCode}
+    </select>
+</mapper>
